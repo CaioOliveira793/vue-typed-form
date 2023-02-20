@@ -24,7 +24,9 @@
     "check:lint": "eslint . --ignore-path .gitignore",
     "build": "parcel build --no-autoinstall",
     "test": "jest",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "clear:build": "rm -rf dist/*",
+    "clear:cache": "rm -rf .parcel-cache/*"
   },
   "devDependencies": {
     "@parcel/config-default": "^2.8.3",
@@ -33,8 +35,14 @@
     "@parcel/plugin": "^2.8.3",
     "@parcel/transformer-typescript-tsc": "^2.8.3",
     "@parcel/transformer-typescript-types": "^2.8.3",
+    "final-form": "^4.20.9",
     "parcel": "^2.8.3",
     "parcel-resolver-typescript-module": "^0.1.8",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vue": "^3.2.47"
+  },
+  "peerDependencies": {
+    "final-form": "^4.20.9",
+    "vue": "^3.2.47"
   }
 }
