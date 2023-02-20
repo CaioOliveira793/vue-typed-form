@@ -1,0 +1,40 @@
+{
+  "name": "vue-typed-form",
+  "version": "0.1.0",
+  "description": "Vue final-form typed integration focused on API typings",
+  "keywords": [
+    "vue",
+    "final-form",
+    "form",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CaioOliveira793/vue-typed-form"
+  },
+  "author": "Caio Oliveira <caio.vsoliveira23@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "source": "src/lib.ts",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/type.d.ts",
+  "scripts": {
+    "check:type": "tsc --noEmit",
+    "check:lint": "eslint . --ignore-path .gitignore",
+    "build": "parcel build --no-autoinstall",
+    "test": "jest",
+    "test:cov": "jest --coverage"
+  },
+  "devDependencies": {
+    "@parcel/config-default": "^2.8.3",
+    "@parcel/core": "^2.8.3",
+    "@parcel/packager-ts": "^2.8.3",
+    "@parcel/plugin": "^2.8.3",
+    "@parcel/transformer-typescript-tsc": "^2.8.3",
+    "@parcel/transformer-typescript-types": "^2.8.3",
+    "parcel": "^2.8.3",
+    "parcel-resolver-typescript-module": "^0.1.8",
+    "typescript": "^4.9.5"
+  }
+}
