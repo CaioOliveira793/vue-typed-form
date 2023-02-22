@@ -1,5 +1,5 @@
 import { FieldState } from 'final-form';
-import { CoercedInputData, InputData, InputTransform } from 'Transform';
+import { CoercedInputData, InputData, InputTransform } from '@/Transform';
 
 /**
  * FieldPropBind

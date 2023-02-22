@@ -1,12 +1,12 @@
 {
 	"compilerOptions": {
-		"incremental": true,
-		"target": "ES2020",
+		"incremental": false,
+		"target": "es2020",
 		"lib": [
 			"esnext",
 			"dom"
 		],
-		"module": "ES2022",
+		"module": "esnext",
 		"moduleResolution": "node",
 		"allowJs": false,
 		"checkJs": false,
@@ -15,12 +15,16 @@
 		"sourceMap": true,
 		"rootDir": "./",
 		"baseUrl": "src",
-		"paths": {},
-		"outDir": "./dist",
-		"isolatedModules": false,
+		"paths": {
+			"@/*": [
+				"./*"
+			]
+		},
+		"outDir": "dist",
+		"isolatedModules": true,
 		"resolveJsonModule": true,
-		"removeComments": true,
-		"stripInternal": false,
+		"removeComments": false,
+		"stripInternal": true,
 		"esModuleInterop": true,
 		"strict": true,
 		"strictNullChecks": true,
@@ -36,14 +40,24 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedIndexedAccess": false,
-		"noPropertyAccessFromIndexSignature": false,
+		"noPropertyAccessFromIndexSignature": true,
 		"preserveConstEnums": true,
 		"exactOptionalPropertyTypes": true,
 		"useUnknownInCatchVariables": true,
+		"noStrictGenericChecks": false,
 		"allowUnreachableCode": false,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"downlevelIteration": false,
-		"skipLibCheck": true
-	}
+		"skipLibCheck": true,
+	},
+	"include": [
+		"src/**/*.ts",
+		"rollup.config.ts"
+	],
+	"exclude": [
+		".rollup.cache/**",
+		"node_modules/**",
+		"dist/**",
+	]
 }

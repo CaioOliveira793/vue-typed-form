@@ -5,9 +5,9 @@ import {
 } from 'final-form';
 import { reactive } from 'vue';
 
-import { createFieldBind, emptyFieldBind, FieldBind, FieldEventBind, FieldPropBind } from 'FieldBind';
-import { CoercedInputData, InputData, InputTransform, TextInputTransform } from 'Transform';
-import { DefaultFieldSubscription, DefaultFormSubscription } from 'SubscriptionOptions';
+import { createFieldBind, emptyFieldBind, FieldBind, FieldEventBind, FieldPropBind } from '@/FieldBind';
+import { CoercedInputData, InputData, InputTransform, TextInputTransform } from '@/Transform';
+import { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
 
 export { createFieldBind, emptyFieldBind, type FieldBind, type FieldEventBind, type FieldPropBind };
 export { TextInputTransform, type CoercedInputData, type InputData, type InputTransform };
