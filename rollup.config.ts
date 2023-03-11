@@ -13,17 +13,20 @@ const buildOptions: RollupOptions = {
 			include: ['src/**/*.ts'],
 			declaration: true,
 			declarationDir: '.',
-		})
+		}),
 	],
-	output: [{
-		file: packageJson.main,
-		sourcemap: true,
-		format: 'cjs'
-	}, {
-		file: packageJson.module,
-		sourcemap: true,
-		format: 'es'
-	}]
+	output: [
+		{
+			file: packageJson.main,
+			sourcemap: true,
+			format: 'cjs',
+		},
+		{
+			file: packageJson.module,
+			sourcemap: true,
+			format: 'es',
+		},
+	],
 };
 
 // TODO: build types

@@ -1,11 +1,13 @@
-import {
-	createForm,
-	FORM_ERROR,
-	type FormApi,
-} from 'final-form';
+import { createForm, FORM_ERROR, type FormApi } from 'final-form';
 import { reactive } from 'vue';
 
-import { createFieldBind, emptyFieldBind, FieldBind, FieldEventBind, FieldPropBind } from '@/FieldBind';
+import {
+	createFieldBind,
+	emptyFieldBind,
+	FieldBind,
+	FieldEventBind,
+	FieldPropBind,
+} from '@/FieldBind';
 import { CoercedInputData, InputData, InputTransform, TextInputTransform } from '@/Transform';
 import { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
 
@@ -65,7 +67,9 @@ export interface UseFormInput<Data extends object> {
  */
 export function useForm<Data extends object>({
 	submit,
-	validate = async () => {},
+	validate = async () => {
+		/* no-op */
+	},
 	initialValues = {},
 	validateOnBlur = true,
 	destroyOnUnregister = false,

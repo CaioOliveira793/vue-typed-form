@@ -49,15 +49,16 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"downlevelIteration": false,
-		"skipLibCheck": true,
+		"skipLibCheck": true
 	},
 	"include": [
 		"src/**/*.ts",
+		"test/**/*.ts",
 		"rollup.config.ts"
 	],
 	"exclude": [
 		".rollup.cache/**",
 		"node_modules/**",
-		"dist/**",
+		"dist/**"
 	]
 }

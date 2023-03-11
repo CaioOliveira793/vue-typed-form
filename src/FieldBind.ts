@@ -36,7 +36,9 @@ export interface FieldBind {
  * @returns a empty field binding
  */
 export function emptyFieldBind(): FieldBind {
-	const noop = () => { /* */ };
+	const noop = () => {
+		/* no-op */
+	};
 	const event: FieldEventBind = {
 		blur: noop,
 		focus: noop,

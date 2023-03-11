@@ -1,6 +1,6 @@
 import { onUnmounted, reactive } from 'vue';
 import { FieldConfig, FieldState, FormApi } from 'final-form';
-import type { InputData, CoercedInputData, InputTransform } from '@/Transform';
+import { InputData, CoercedInputData, InputTransform } from '@/Transform';
 import { createFieldBind, emptyFieldBind, FieldBind } from '@/FieldBind';
 import { DefaultFieldSubscription } from '@/SubscriptionOptions';
 
