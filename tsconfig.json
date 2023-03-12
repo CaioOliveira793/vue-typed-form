@@ -18,6 +18,9 @@
 		"paths": {
 			"@/*": [
 				"./*"
+			],
+			"@test/*": [
+				"./../test/*"
 			]
 		},
 		"outDir": "dist",
@@ -52,8 +55,8 @@
 		"skipLibCheck": true
 	},
 	"include": [
-		"src/**/*.ts",
-		"test/**/*.ts",
+		"src/**/*",
+		"test/**/*",
 		"rollup.config.ts"
 	],
 	"exclude": [

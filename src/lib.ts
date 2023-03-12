@@ -1,19 +1,21 @@
 import { createForm, FORM_ERROR, type FormApi } from 'final-form';
 import { reactive } from 'vue';
 
-import {
+export {
 	createFieldBind,
 	emptyFieldBind,
-	FieldBind,
-	FieldEventBind,
-	FieldPropBind,
+	type FieldBind,
+	type FieldEventBind,
+	type FieldPropBind,
 } from '@/FieldBind';
-import { CoercedInputData, InputData, InputTransform, TextInputTransform } from '@/Transform';
-import { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
-
-export { createFieldBind, emptyFieldBind, type FieldBind, type FieldEventBind, type FieldPropBind };
-export { TextInputTransform, type CoercedInputData, type InputData, type InputTransform };
-export { DefaultFieldSubscription, DefaultFormSubscription };
+export { useFieldBind, type UseFieldBinding } from '@/UseFieldBind';
+export {
+	TextInputTransform,
+	type CoercedInputData,
+	type InputData,
+	type InputTransform,
+} from '@/Transform';
+export { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
 
 export type ValidationError<T> =
 	| { [P in keyof T]?: string[] | undefined }
