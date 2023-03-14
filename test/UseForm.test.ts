@@ -1,39 +1,41 @@
 // @vitest-environment happy-dom
 
 import { describe, it, expect } from 'vitest';
-import { fireEvent, render, RenderOptions } from '@testing-library/vue';
-// import { useForm, useFieldBind, TextInputTransform } from '@/lib';
+import { mount } from '@vue/test-utils';
 import TestForm, {
 	CREDENTIAL_FORM,
 	EMAIL_INPUT,
 	PASSWORD_INPUT,
 	OTP_INPUT,
-	type UserCredential,
 } from '@test/TestForm.vue';
+
+function testidSelector(id: string): string {
+	return `[data-testid=${id}]`;
+}
+
+function testSelector(value: string): string {
+	return `[data-test=${value}]`;
+}
+
+// TODO: test visibility of validation error and submission errors
 
 describe('UseForm test', () => {
 	it('bind form fields', async () => {
-		const { getByTestId } = render(TestForm, {
-			listeners: {
-				submit: async (data: UserCredential) => {
-					expect(data).toStrictEqual({
-						email: 'user@email.com',
-						password: '12345678',
-						otp: '654321',
-					});
-				},
-			},
-		} as RenderOptions);
+		const wrapper = mount(TestForm);
 
-		const formEl: HTMLFormElement = getByTestId(CREDENTIAL_FORM);
-		const emailInput: HTMLFormElement = getByTestId(EMAIL_INPUT);
-		const passwordInput: HTMLFormElement = getByTestId(PASSWORD_INPUT);
-		const otpInput: HTMLFormElement = getByTestId(OTP_INPUT);
+		const form = wrapper.find<HTMLFormElement>(testidSelector(CREDENTIAL_FORM));
+		const emailInput = wrapper.find<HTMLInputElement>(testidSelector(EMAIL_INPUT));
+		const passwordInput = wrapper.find<HTMLInputElement>(testidSelector(PASSWORD_INPUT));
+		const otpInput = wrapper.find<HTMLInputElement>(testidSelector(OTP_INPUT));
 
-		await fireEvent.update(emailInput, 'user@email.com');
-		await fireEvent.update(passwordInput, 'user@email.com');
-		await fireEvent.update(otpInput, 'user@email.com');
+		await Promise.all([
+			emailInput.setValue('user@email.com'),
+			passwordInput.setValue('12345678'),
+			otpInput.setValue('654321'),
+		]);
 
-		await fireEvent.submit(formEl);
+		await form.trigger('submit');
+
+		expect(wrapper.find(testSelector('form_submited')).exists()).toBe(true);
 	});
 });
