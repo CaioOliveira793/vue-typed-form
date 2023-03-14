@@ -1,25 +1,21 @@
-import { createForm, FORM_ERROR, type FormApi } from 'final-form';
 import { reactive } from 'vue';
+import { createForm, type FORM_ERROR, type FormApi } from 'final-form';
 
-export {
-	createFieldBind,
-	emptyFieldBind,
-	type FieldBind,
-	type FieldEventBind,
-	type FieldPropBind,
-} from '@/FieldBind';
-export { useFieldBind, type UseFieldBinding } from '@/UseFieldBind';
+export { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
+export { useFieldState, type UseFieldStateConfig, type DecoratedFieldState } from '@/UseFieldState';
+export { useFormState, type UseFormStateConfig, type DecoratedFormState } from '@/UseFormState';
 export {
 	TextInputTransform,
+	getStringFromInput,
+	isHTMLInputElementBooleanType,
 	type CoercedInputData,
 	type InputData,
 	type InputTransform,
 } from '@/Transform';
-export { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
 
 export type ValidationError<T> =
 	| { [P in keyof T]?: string[] | undefined }
-	| { [FORM_ERROR]: string };
+	| { [FORM_ERROR]?: string[] | undefined };
 
 export type FinalSubmitHandler<Data> = (
 	values: Data,
@@ -69,12 +65,12 @@ export interface UseFormInput<Data extends object> {
  */
 export function useForm<Data extends object>({
 	submit,
-	validate = async () => {
+	validate = async function noop() {
 		/* no-op */
 	},
 	initialValues = {},
-	validateOnBlur = true,
-	destroyOnUnregister = false,
+	validateOnBlur = false,
+	destroyOnUnregister = true,
 	keepDirtyOnReinitialize = false,
 }: UseFormInput<Data>): FormApi<Data> {
 	const formApi = reactive(

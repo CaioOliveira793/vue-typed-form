@@ -30,7 +30,7 @@
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
     "clear:build": "rm -rf dist/*",
-    "clear:cache": "rm -rf .parcel-cache/*"
+    "clear:cache": "rm -rf .rollup.cache/*"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.0.0",

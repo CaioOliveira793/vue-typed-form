@@ -57,7 +57,8 @@
 	"include": [
 		"src/**/*",
 		"test/**/*",
-		"rollup.config.ts"
+		"rollup.config.ts",
+		"vitest.config.ts"
 	],
 	"exclude": [
 		".rollup.cache/**",
