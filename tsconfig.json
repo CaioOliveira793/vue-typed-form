@@ -24,7 +24,7 @@
 			]
 		},
 		"outDir": "dist",
-		"isolatedModules": true,
+		"isolatedModules": false,
 		"resolveJsonModule": true,
 		"removeComments": false,
 		"stripInternal": true,
@@ -63,6 +63,7 @@
 	"exclude": [
 		".rollup.cache/**",
 		"node_modules/**",
-		"dist/**"
+		"dist/**",
+		"coverage/**"
 	]
 }

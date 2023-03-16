@@ -26,11 +26,15 @@
   "scripts": {
     "check:type": "vue-tsc --noEmit",
     "check:lint": "eslint . --ext vue,ts,js --ignore-path .gitignore",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "build:js": "rollup --config rollup.config.ts --configPlugin typescript",
+    "build:type": "dts-bundle-generator --out-file dist/lib-type.d.ts src/lib.ts",
+    "build": "run-z build:js,build:type",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
     "clear:build": "rm -rf dist/*",
-    "clear:cache": "rm -rf .rollup.cache/*"
+    "clear:cache": "rm -rf .rollup.cache/*",
+    "clear:coverage": "rm -rf coverage/*",
+    "clear": "rm -rf dist/* .rollup.cache/* coverage/*"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.0.0",
@@ -41,6 +45,7 @@
     "@vitest/coverage-c8": "^0.29.2",
     "@vue/compiler-sfc": "^3.2.47",
     "@vue/test-utils": "^2.3.1",
+    "dts-bundle-generator": "^7.2.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -49,6 +54,7 @@
     "happy-dom": "^8.9.0",
     "prettier": "^2.8.4",
     "rollup": "^3.17.2",
+    "run-z": "^1.11.0",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5",
     "vite": "^4.1.4",

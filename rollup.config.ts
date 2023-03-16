@@ -29,6 +29,4 @@ const buildOptions: RollupOptions = {
 	],
 };
 
-// TODO: build types
-
 export default buildOptions;
