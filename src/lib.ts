@@ -13,9 +13,9 @@ export {
 	type InputTransform,
 } from '@/Transform';
 
-export type ValidationError<T> =
-	| { [P in keyof T]?: string[] | undefined }
-	| { [FORM_ERROR]?: string[] | undefined };
+export type ValidationError<T> = { [P in keyof T]?: string[] | undefined } & {
+	[FORM_ERROR]?: string[] | undefined;
+};
 
 export type FinalSubmitHandler<Data> = (
 	values: Data,
