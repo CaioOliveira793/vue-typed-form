@@ -1,6 +1,6 @@
 {
   "name": "vue-typed-form",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue final-form typed integration focused on API typings",
   "keywords": [
     "vue",
@@ -29,6 +29,7 @@
   "scripts": {
     "check:type": "vue-tsc --noEmit",
     "check:lint": "eslint . --ext vue,ts,js --ignore-path .gitignore",
+    "check": "run-z check:type,check:lint",
     "build:js": "rollup --config rollup.config.ts --configPlugin typescript",
     "build:type": "dts-bundle-generator --out-file dist/lib-type.d.ts src/lib.ts",
     "build": "run-z build:js,build:type",
