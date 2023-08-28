@@ -2,14 +2,21 @@ import { reactive } from 'vue';
 import { createForm, type FORM_ERROR, type FormApi } from 'final-form';
 
 export { DefaultFieldSubscription, DefaultFormSubscription } from '@/SubscriptionOptions';
+export {
+	fieldInputProp,
+	fieldInputEvent,
+	fieldStateVisibleError,
+	FieldEvent,
+	FieldProp,
+	FieldVisibleError,
+} from '@/FieldStateDecorator';
+export { formStateErrors } from '@/FormStateDecorator';
 export { useFieldState, type UseFieldStateConfig, type DecoratedFieldState } from '@/UseFieldState';
 export { useFormState, type UseFormStateConfig, type DecoratedFormState } from '@/UseFormState';
 export {
 	TextInputTransform,
 	getStringFromInput,
-	isHTMLInputElementBooleanType,
-	type CoercedInputData,
-	type InputData,
+	type DisplayData as InputData,
 	type InputTransform,
 } from '@/Transform';
 

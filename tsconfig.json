@@ -45,7 +45,7 @@
 		"noUncheckedIndexedAccess": false,
 		"noPropertyAccessFromIndexSignature": true,
 		"preserveConstEnums": true,
-		"exactOptionalPropertyTypes": true,
+		"exactOptionalPropertyTypes": false,
 		"useUnknownInCatchVariables": true,
 		"noStrictGenericChecks": false,
 		"allowUnreachableCode": false,

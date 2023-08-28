@@ -1,6 +1,6 @@
 import type { FieldState } from 'final-form';
 
-import type { CoercedInputData, InputData, InputTransform } from '@/Transform';
+import type { DisplayData, InputTransform } from '@/Transform';
 
 /**
  * Field error collection that should be visible to the user.
@@ -23,7 +23,7 @@ export interface FieldVisibleError {
 	errors: string[];
 }
 
-export function fieldStateVisibleError<FieldValue extends CoercedInputData>(
+export function fieldStateVisibleError<FieldValue>(
 	state: Readonly<FieldState<FieldValue>>
 ): FieldVisibleError {
 	let invalid = false;
@@ -50,11 +50,11 @@ export interface FieldProp {
 	errors: string[];
 }
 
-export function fieldInputProp<Input extends InputData, FieldValue extends CoercedInputData>(
+export function fieldInputProp<FieldValue, Display extends DisplayData>(
 	state: FieldState<FieldValue>,
-	transformer: InputTransform<Input, FieldValue>
+	transformer: InputTransform<InputEvent, FieldValue, Display>
 ): FieldProp {
-	const inputValue = transformer.display(state.value);
+	const inputValue = transformer.display(state.value ?? null);
 	const { errors, invalid } = fieldStateVisibleError(state);
 
 	const prop: FieldProp = {
@@ -76,16 +76,18 @@ export function fieldInputProp<Input extends InputData, FieldValue extends Coerc
 
 export interface FieldEvent {
 	blur(): void;
-	input(ev: Event): void;
+	input(ev: InputEvent): void;
 	focus(): void;
 }
 
-export function fieldInputEvent<Input extends InputData, FieldValue extends CoercedInputData>(
+export function fieldInputEvent<FieldValue, Display extends DisplayData>(
 	state: FieldState<FieldValue>,
-	transformer: InputTransform<Input, FieldValue>
+	transformer: InputTransform<InputEvent, FieldValue, Display>
 ): FieldEvent {
 	function handleInput(ev: InputEvent): void {
-		state.change(transformer.parse(ev));
+		// Instead of `FieldValue | undefined`, take
+		// `FieldValue | null`, beeing null the default value
+		state.change(transformer.parse(ev) as FieldValue);
 	}
 
 	return {

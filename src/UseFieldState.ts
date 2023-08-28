@@ -1,7 +1,7 @@
-import type { FieldConfig, FieldState, FormApi } from 'final-form';
+import type { FieldState, FormApi, IsEqual } from 'final-form';
 import { onUnmounted, reactive } from 'vue';
 
-import type { InputData, CoercedInputData, InputTransform } from '@/Transform';
+import type { DisplayData, InputTransform } from '@/Transform';
 import { DefaultFieldSubscription } from '@/SubscriptionOptions';
 import {
 	fieldInputProp,
@@ -13,23 +13,44 @@ import {
 export interface UseFieldStateConfig<
 	in out Data extends object,
 	Field extends keyof Data,
-	out Input extends InputData,
-	in out FieldValue extends Data[Field] & CoercedInputData
+	out Display extends DisplayData,
+	in out FieldValue extends Data[Field] | null
 > {
 	/** Field name */
 	name: Field;
-
 	/** Form api */
 	formApi: FormApi<Data>;
-
 	/** Field transformer */
-	transformer: InputTransform<Input, FieldValue>;
-
-	/** Field Config */
-	fieldConfig?: FieldConfig<Data[Field]>;
+	transformer: InputTransform<InputEvent, FieldValue, Display>;
+	/**
+	 * Default field value
+	 *
+	 * @default null
+	 */
+	defaultValue?: FieldValue | null;
+	/**
+	 * Create field subscription without notifying other subscribers
+	 *
+	 * @default false
+	 */
+	silent?: boolean;
+	/**
+	 * After submit callback
+	 */
+	afterSubmit?: () => void;
+	/**
+	 * Before submit callback
+	 */
+	beforeSubmit?: () => void | false;
+	/**
+	 * Equality verifier for this field.
+	 *
+	 * @default === // strict equal
+	 */
+	isEqual?: IsEqual;
 }
 
-export interface DecoratedFieldState<FieldValue extends CoercedInputData> {
+export interface DecoratedFieldState<FieldValue> {
 	state: FieldState<FieldValue>;
 	event: FieldEvent;
 	prop: FieldProp;
@@ -44,14 +65,18 @@ export interface DecoratedFieldState<FieldValue extends CoercedInputData> {
 export function useFieldState<
 	Data extends object,
 	Field extends keyof Data,
-	Input extends InputData,
-	FieldValue extends Data[Field] & CoercedInputData
+	Display extends DisplayData,
+	FieldValue extends Data[Field] | null
 >({
 	name,
 	formApi,
 	transformer,
-	fieldConfig,
-}: UseFieldStateConfig<Data, Field, Input, FieldValue>): DecoratedFieldState<FieldValue> {
+	defaultValue = null,
+	silent = false,
+	afterSubmit,
+	beforeSubmit,
+	isEqual,
+}: UseFieldStateConfig<Data, Field, Display, FieldValue>): DecoratedFieldState<FieldValue> {
 	const fieldState: DecoratedFieldState<FieldValue> = reactive({
 		event: null as never,
 		prop: null as never,
@@ -61,13 +86,13 @@ export function useFieldState<
 	const unregister = formApi.registerField(
 		name,
 		state => {
-			const fstate = state as unknown as FieldState<FieldValue>;
-			fieldState.prop = fieldInputProp<Input, FieldValue>(fstate, transformer);
-			fieldState.event = fieldInputEvent<Input, FieldValue>(fstate, transformer);
+			const fstate = state as FieldState<FieldValue>;
+			fieldState.prop = fieldInputProp<FieldValue, Display>(fstate, transformer);
+			fieldState.event = fieldInputEvent<FieldValue, Display>(fstate, transformer);
 			fieldState.state = fstate;
 		},
 		DefaultFieldSubscription,
-		fieldConfig
+		{ silent, afterSubmit, beforeSubmit, isEqual, initialValue: defaultValue, defaultValue }
 	);
 
 	onUnmounted(unregister);

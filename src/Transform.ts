@@ -1,16 +1,9 @@
 /**
- * CoercedInputData
- *
- * Data retrieved from the HTMLElement.
- */
-export type CoercedInputData = string | boolean | number | Date | null;
-
-/**
  * InputData
  *
  * Data displayed by the HTMLElement.
  */
-export type InputData = boolean | string;
+export type DisplayData = string | boolean | number | Date | null | object | unknown;
 
 /**
  * InputTransform
@@ -18,22 +11,23 @@ export type InputData = boolean | string;
  * Input value transformer.
  */
 export interface InputTransform<
-	out Input extends InputData,
-	in out Output extends CoercedInputData
+	Input = InputEvent,
+	in out Output = unknown,
+	out Display extends DisplayData = unknown
 > {
 	/**
 	 * Parse the entire value from the InputEvent.
 	 *
 	 * @param event InputEvent
 	 */
-	parse(event: InputEvent): Output;
+	parse(event: Input): Output | null;
 
 	/**
-	 * Display the parsed value as a user readable InputData.
+	 * Display the parsed value as a displayable field  InputData.
 	 *
-	 * @param coerced parsed value from the Input.
+	 * @param out parsed value from the Input.
 	 */
-	display(coerced?: Output): Input;
+	display(out: Output | null): Display;
 }
 
 /**
@@ -41,20 +35,13 @@ export interface InputTransform<
  *
  * Transforms a non-empty input value.
  */
-export const TextInputTransform: InputTransform<string, string> = {
-	parse(event) {
-		return getStringFromInput(event);
-	},
-	display(coerced) {
-		return coerced ? coerced : '';
-	},
+export const TextInputTransform: InputTransform<InputEvent, string, string | null> = {
+	parse: getStringFromInput,
+	display: displayInputValue,
 };
 
-/**
- * Verify if `HTMLInputElement` receives a boolean type as input. (e.g. from type radio or checkbox)
- */
-export function isHTMLInputElementBooleanType(element: HTMLInputElement): boolean {
-	return element.type === 'checkbox' || element.type === 'radio';
+export function displayInputValue(coerced?: string | null): string {
+	return coerced ? coerced : '';
 }
 
 /**
@@ -62,22 +49,16 @@ export function isHTMLInputElementBooleanType(element: HTMLInputElement): boolea
  *
  * @param ev InputEvent
  */
-export function getStringFromInput(ev: InputEvent): string {
+export function getStringFromInput(ev: InputEvent): string | null {
 	const target = ev.target;
 
-	if (target instanceof HTMLTextAreaElement) {
-		return target.value;
+	if (
+		target instanceof HTMLTextAreaElement ||
+		target instanceof HTMLInputElement ||
+		target instanceof HTMLSelectElement
+	) {
+		return target.value ? target.value : null;
 	}
 
-	if (target instanceof HTMLInputElement) {
-		if (isHTMLInputElementBooleanType(target)) {
-			console.error('Could not extract string from boolean input type ', target.type);
-			return '';
-		}
-
-		return target.value;
-	}
-
-	console.error('Cloud not extract string from EventTarget', target);
-	return '';
+	return null;
 }
