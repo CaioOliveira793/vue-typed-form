@@ -1,4 +1,4 @@
-import type { FieldState, FormApi, IsEqual } from 'final-form';
+import type { FieldState, FormApi } from 'final-form';
 import { onUnmounted, reactive } from 'vue';
 
 import type { InputTransform } from '@/Transform';
@@ -10,6 +10,8 @@ import {
 	type FieldProp,
 } from '@/FieldStateDecorator';
 import type { FormPrimitive, Path, PathWith } from '@/Type';
+
+export type EqualFn<L = unknown, R = unknown> = (lhs: L, rhs: R) => boolean;
 
 export interface UseFieldStateConfig<
 	in out Data extends object,
@@ -49,7 +51,7 @@ export interface UseFieldStateConfig<
 	 *
 	 * @default === // strict equal
 	 */
-	isEqual?: IsEqual;
+	equalFn?: EqualFn;
 }
 
 export interface DecoratedFieldState<FieldValue> {
@@ -78,7 +80,7 @@ export function useFieldState<
 	silent = false,
 	afterSubmit,
 	beforeSubmit,
-	isEqual,
+	equalFn,
 }: UseFieldStateConfig<
 	Data,
 	FieldValue,
@@ -101,7 +103,14 @@ export function useFieldState<
 			fieldState.state = fstate;
 		},
 		DefaultFieldSubscription,
-		{ silent, afterSubmit, beforeSubmit, isEqual, initialValue: defaultValue, defaultValue }
+		{
+			silent,
+			afterSubmit,
+			beforeSubmit,
+			isEqual: equalFn,
+			initialValue: defaultValue,
+			defaultValue,
+		}
 	);
 
 	onUnmounted(unregister);
