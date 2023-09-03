@@ -1,20 +1,9 @@
 /**
- * InputData
- *
- * Data displayed by the HTMLElement.
- */
-export type DisplayData = string | boolean | number | Date | null | object | unknown;
-
-/**
  * InputTransform
  *
  * Input value transformer.
  */
-export interface InputTransform<
-	Input = InputEvent,
-	in out Output = unknown,
-	out Display extends DisplayData = unknown
-> {
+export interface InputTransform<Input = InputEvent, in out Output = unknown, out Display = string> {
 	/**
 	 * Parse the entire value from the InputEvent.
 	 *
@@ -35,7 +24,7 @@ export interface InputTransform<
  *
  * Transforms a non-empty input value.
  */
-export const TextInputTransform: InputTransform<InputEvent, string, string | null> = {
+export const TextInputTransform: InputTransform<InputEvent, string | null, string> = {
 	parse: getStringFromInput,
 	display: displayInputValue,
 };

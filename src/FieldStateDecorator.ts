@@ -1,6 +1,6 @@
 import type { FieldState } from 'final-form';
 
-import type { DisplayData, InputTransform } from '@/Transform';
+import type { InputTransform } from '@/Transform';
 
 /**
  * Field error collection that should be visible to the user.
@@ -50,7 +50,7 @@ export interface FieldProp {
 	errors: string[];
 }
 
-export function fieldInputProp<FieldValue, Display extends DisplayData>(
+export function fieldInputProp<FieldValue, Display = string>(
 	state: FieldState<FieldValue>,
 	transformer: InputTransform<InputEvent, FieldValue, Display>
 ): FieldProp {
@@ -80,7 +80,7 @@ export interface FieldEvent {
 	focus(): void;
 }
 
-export function fieldInputEvent<FieldValue, Display extends DisplayData>(
+export function fieldInputEvent<FieldValue, Display = string>(
 	state: FieldState<FieldValue>,
 	transformer: InputTransform<InputEvent, FieldValue, Display>
 ): FieldEvent {

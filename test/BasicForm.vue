@@ -55,9 +55,6 @@ const otp = useFieldState({ name: 'otp', formApi, transformer: TextInputTransfor
 
 <script lang="ts">
 export const CREDENTIAL_FORM = 'credential_form';
-export const EMAIL_INPUT = 'email_form';
-export const PASSWORD_INPUT = 'password_form';
-export const OTP_INPUT = 'otp_form';
 
 export const FORM_ERROR = 'form_error';
 export const EMAIL_ERROR = 'email_error';
@@ -71,36 +68,19 @@ export const FORM_SUBMITED = 'form_submited';
 <template>
 	<form :data-test="CREDENTIAL_FORM" @submit.prevent="formApi.submit">
 		<div>
-			<input
-				:data-test="EMAIL_INPUT"
-				type="text"
-				inputmode="email"
-				v-bind="email.prop"
-				v-on="email.event"
-			/>
+			<input type="text" v-bind="email.prop" v-on="email.event" />
 			<p v-if="email.prop.errors.length !== 0" data-any-error :data-test="EMAIL_ERROR">
 				email error
 			</p>
 		</div>
 		<div>
-			<input
-				:data-test="PASSWORD_INPUT"
-				type="password"
-				v-bind="password.prop"
-				v-on="password.event"
-			/>
+			<input type="password" v-bind="password.prop" v-on="password.event" />
 			<p v-if="password.prop.errors.length !== 0" data-any-error :data-test="PASSWORD_ERROR">
 				password error
 			</p>
 		</div>
 		<div>
-			<input
-				:data-test="OTP_INPUT"
-				type="text"
-				inputmode="numeric"
-				v-bind="otp.prop"
-				v-on="otp.event"
-			/>
+			<input type="text" v-bind="otp.prop" v-on="otp.event" />
 			<p v-if="otp.prop.errors.length !== 0" data-any-error :data-test="OTP_ERROR">otp error</p>
 		</div>
 		<p v-if="formState.errors.length !== 0" data-any-error :data-test="FORM_ERROR">form error</p>

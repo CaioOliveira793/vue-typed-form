@@ -1,7 +1,7 @@
 import type { FieldState, FormApi, IsEqual } from 'final-form';
 import { onUnmounted, reactive } from 'vue';
 
-import type { DisplayData, InputTransform } from '@/Transform';
+import type { InputTransform } from '@/Transform';
 import { DefaultFieldSubscription } from '@/SubscriptionOptions';
 import {
 	fieldInputProp,
@@ -9,12 +9,14 @@ import {
 	type FieldEvent,
 	type FieldProp,
 } from '@/FieldStateDecorator';
+import type { FormPrimitive, Path, PathWith } from '@/Type';
 
 export interface UseFieldStateConfig<
 	in out Data extends object,
-	Field extends keyof Data,
-	out Display extends DisplayData,
-	in out FieldValue extends Data[Field] | null
+	in out FieldValue,
+	in out Field extends Path<Data, Primitive> | PathWith<Data, FieldValue, Primitive>,
+	out Display = string,
+	in out Primitive = FormPrimitive
 > {
 	/** Field name */
 	name: Field;
@@ -64,9 +66,10 @@ export interface DecoratedFieldState<FieldValue> {
  */
 export function useFieldState<
 	Data extends object,
-	Field extends keyof Data,
-	Display extends DisplayData,
-	FieldValue extends Data[Field] | null
+	FieldValue,
+	Field extends Path<Data, Primitive> | PathWith<Data, FieldValue, Primitive>,
+	Display = string,
+	Primitive = FormPrimitive
 >({
 	name,
 	formApi,
@@ -76,7 +79,13 @@ export function useFieldState<
 	afterSubmit,
 	beforeSubmit,
 	isEqual,
-}: UseFieldStateConfig<Data, Field, Display, FieldValue>): DecoratedFieldState<FieldValue> {
+}: UseFieldStateConfig<
+	Data,
+	FieldValue,
+	Field,
+	Display,
+	Primitive
+>): DecoratedFieldState<FieldValue> {
 	const fieldState: DecoratedFieldState<FieldValue> = reactive({
 		event: null as never,
 		prop: null as never,
@@ -84,7 +93,7 @@ export function useFieldState<
 	});
 
 	const unregister = formApi.registerField(
-		name,
+		name as keyof Data,
 		state => {
 			const fstate = state as FieldState<FieldValue>;
 			fieldState.prop = fieldInputProp<FieldValue, Display>(fstate, transformer);

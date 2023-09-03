@@ -1,17 +1,13 @@
 // @vitest-environment happy-dom
-
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import TestForm, {
 	CREDENTIAL_FORM,
-	EMAIL_INPUT,
-	PASSWORD_INPUT,
-	OTP_INPUT,
 	FORM_SUBMITED,
 	PASSWORD_ERROR,
 	OTP_ERROR,
 	EMAIL_ERROR,
-} from '@test/TestForm.vue';
+} from '@test/BasicForm.vue';
 
 function testAttrAs(value: string): string {
 	return `[data-test=${value}]`;
@@ -22,9 +18,9 @@ describe('UseForm test', () => {
 		const wrapper = mount(TestForm);
 
 		const form = wrapper.find<HTMLFormElement>(testAttrAs(CREDENTIAL_FORM));
-		const emailInput = wrapper.find<HTMLInputElement>(testAttrAs(EMAIL_INPUT));
-		const passwordInput = wrapper.find<HTMLInputElement>(testAttrAs(PASSWORD_INPUT));
-		const otpInput = wrapper.find<HTMLInputElement>(testAttrAs(OTP_INPUT));
+		const emailInput = wrapper.find<HTMLInputElement>('[name=email]');
+		const passwordInput = wrapper.find<HTMLInputElement>('[name=password]');
+		const otpInput = wrapper.find<HTMLInputElement>('[name=otp]');
 
 		await Promise.all([
 			emailInput.setValue('user@company.com'),
@@ -40,8 +36,8 @@ describe('UseForm test', () => {
 	it('render validation errors for all touched inputs', async () => {
 		const wrapper = mount(TestForm);
 
-		const emailInput = wrapper.find<HTMLInputElement>(testAttrAs(EMAIL_INPUT));
-		const passwordInput = wrapper.find<HTMLInputElement>(testAttrAs(PASSWORD_INPUT));
+		const emailInput = wrapper.find<HTMLInputElement>('[name=email]');
+		const passwordInput = wrapper.find<HTMLInputElement>('[name=password]');
 
 		await emailInput.trigger('focus');
 		await emailInput.setValue('not_a_email');
@@ -60,9 +56,9 @@ describe('UseForm test', () => {
 		const wrapper = mount(TestForm);
 
 		const form = wrapper.find<HTMLFormElement>(testAttrAs(CREDENTIAL_FORM));
-		const emailInput = wrapper.find<HTMLInputElement>(testAttrAs(EMAIL_INPUT));
-		const passwordInput = wrapper.find<HTMLInputElement>(testAttrAs(PASSWORD_INPUT));
-		const otpInput = wrapper.find<HTMLInputElement>(testAttrAs(OTP_INPUT));
+		const emailInput = wrapper.find<HTMLInputElement>('[name=email]');
+		const passwordInput = wrapper.find<HTMLInputElement>('[name=password]');
+		const otpInput = wrapper.find<HTMLInputElement>('[name=otp]');
 
 		await Promise.all([
 			emailInput.setValue('fake@email.com'),
@@ -79,7 +75,7 @@ describe('UseForm test', () => {
 
 	it('not render validation error when not touched', async () => {
 		const wrapper = mount(TestForm);
-		const emailInput = wrapper.find<HTMLInputElement>(testAttrAs(EMAIL_INPUT));
+		const emailInput = wrapper.find<HTMLInputElement>('[name=email]');
 
 		await emailInput.trigger('focus');
 		await emailInput.setValue('typo');
@@ -93,9 +89,9 @@ describe('UseForm test', () => {
 	it('not render submission error when not touched', async () => {
 		const wrapper = mount(TestForm);
 		const form = wrapper.find<HTMLFormElement>(testAttrAs(CREDENTIAL_FORM));
-		const emailInput = wrapper.find<HTMLInputElement>(testAttrAs(EMAIL_INPUT));
-		const passwordInput = wrapper.find<HTMLInputElement>(testAttrAs(PASSWORD_INPUT));
-		const otpInput = wrapper.find<HTMLInputElement>(testAttrAs(OTP_INPUT));
+		const emailInput = wrapper.find<HTMLInputElement>('[name=email]');
+		const passwordInput = wrapper.find<HTMLInputElement>('[name=password]');
+		const otpInput = wrapper.find<HTMLInputElement>('[name=otp]');
 
 		await Promise.all([
 			emailInput.setValue('user@someotherdomain.com'),
