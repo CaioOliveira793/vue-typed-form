@@ -1,5 +1,4 @@
 import type { FieldState } from 'final-form';
-
 import type { InputTransform } from '@/Transform';
 
 /**
@@ -50,6 +49,13 @@ export interface FieldProp {
 	errors: string[];
 }
 
+/**
+ * Extract the field props to be used in the field input.
+ *
+ * @param state field state
+ * @param transformer input transform
+ * @returns {FieldProp} field props
+ */
 export function fieldInputProp<FieldValue, Display = string>(
 	state: FieldState<FieldValue>,
 	transformer: InputTransform<InputEvent, FieldValue, Display>

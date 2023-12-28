@@ -51,3 +51,30 @@ export function getStringFromInput(ev: InputEvent): string | null {
 
 	return null;
 }
+
+/**
+ * Boolean input transform.
+ *
+ * Extracts a boolean from the checked property of a `checkbox` or a `radio` input.
+ */
+export const BooleanInputTransform: InputTransform<InputEvent, boolean | null, boolean> = {
+	parse: getBooleanFromInput,
+	display: displayBooleanValue,
+};
+
+export function getBooleanFromInput(ev: InputEvent): boolean | null {
+	const target = ev.target;
+
+	if (
+		target instanceof HTMLInputElement &&
+		(target.type === 'checkbox' || target.type === 'radio')
+	) {
+		return target.checked ?? null;
+	}
+
+	return null;
+}
+
+export function displayBooleanValue(bool: boolean | null): boolean {
+	return bool ?? false;
+}
