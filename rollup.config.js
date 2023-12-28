@@ -1,11 +1,11 @@
 import typescript from '@rollup/plugin-typescript';
-import { RollupOptions } from 'rollup';
 import { readFileSync } from 'node:fs';
 
 const packageJson = JSON.parse(readFileSync('package.json', { encoding: 'utf-8' }));
 const peerDependencies = Object.keys(packageJson.peerDependencies);
 
-const buildOptions: RollupOptions = {
+/** @type RollupOptions */
+const buildOptions = {
 	input: packageJson.source,
 	external: peerDependencies,
 	plugins: [

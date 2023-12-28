@@ -30,7 +30,7 @@
     "check:type": "vue-tsc --noEmit",
     "check:lint": "eslint . --ext vue,ts,js --ignore-path .gitignore",
     "check": "run-z check:type,check:lint",
-    "build:js": "rollup --config rollup.config.ts --configPlugin typescript",
+    "build:js": "rollup --config rollup.config.js",
     "build:type": "dts-bundle-generator --out-file dist/lib-type.d.ts src/lib.ts",
     "build": "run-z build:js,build:type",
     "test": "vitest run",
