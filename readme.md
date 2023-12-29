@@ -8,7 +8,7 @@ The core api is essentially a shell to use final-form library nicelly with Vue.
 
 ```vue
 <script setup lang="ts">
-// imports omited ...
+import { useForm, useFieldStatem TextInputTransform } from '@/lib';
 
 interface CredentialForm {
 	username: string;
@@ -32,28 +32,6 @@ const password = useFieldState({ formApi, name: 'password', transform: TextInput
 		<input v-bind="password.prop" v-on="password.event" />
 	</form>
 </template>
-```
-
-Although, it can *decorate* the emitted [state](https://final-form.org/docs/final-form/types/FieldState) from final-form, permitting to add application behaviour from outside of the library.
-
-```ts
-const formApi = useForm<CredentialForm>({
-	submit: async data => {
-		makeRequest(data);
-	},
-	validate: schemaAdapterFn(CredentialSchema),
-});
-
-const field = useFieldState({
-	formApi,
-	name: 'username',
-	transform: CustomTransformer,
-	decorator: myFieldDecorator
-});
-
-function myFieldDecorator(state: FieldState) {
-	// ...
-}
 ```
 
 ## API Docs

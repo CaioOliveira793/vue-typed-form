@@ -46,7 +46,7 @@ export function getStringFromInput(ev: InputEvent): string | null {
 		target instanceof HTMLInputElement ||
 		target instanceof HTMLSelectElement
 	) {
-		return target.value ? target.value : null;
+		return target.value ?? null;
 	}
 
 	return null;
