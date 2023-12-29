@@ -1,6 +1,6 @@
 {
   "name": "vue-typed-form",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Vue final-form typed integration focused on API typings",
   "keywords": [
     "vue",
