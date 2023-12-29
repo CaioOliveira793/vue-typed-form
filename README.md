@@ -36,7 +36,7 @@ const password = useFieldState({ formApi, name: 'password', transform: TextInput
 
 ## API Docs
 
-TODO: API documentation
+See the [JSDoc generated documentation](./DOCUMENTATION.md)
 
 ## Testing
 

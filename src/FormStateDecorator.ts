@@ -4,7 +4,7 @@ import type { FormState } from 'final-form';
  * Collect all form errors from validation error and submission error.
  *
  * @param state Form state.
- * @returns Form errors from `{ [FORM_ERROR]: errorList }`.
+ * @returns All form errors.
  */
 export function formStateErrors<Data>(state: Readonly<FormState<Data>>): string[] {
 	const errors: string[] = [];
